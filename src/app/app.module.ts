@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +15,8 @@ import {
   MatListModule,
   MatCardModule,
   MatInputModule,
-  MatDividerModule
+  MatDividerModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { HomeComponent } from './components/home/home.component';
 import { AreaEditComponent } from './components/area-edit/area-edit.component';
@@ -29,6 +30,11 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { registerLocaleData } from '@angular/common';
 import localeJa from '@angular/common/locales/ja';
+import { ChartComponent } from './components/chart/chart.component';
+
+import { ForecastErrorHandler } from './services/error-handler';
+import { HttpErrorInterceptor } from './services/http-error-interceptor';
+import { MessageComponent } from './components/message/message.component';
 
 registerLocaleData(localeJa, 'ja');
 
@@ -38,7 +44,9 @@ registerLocaleData(localeJa, 'ja');
     HomeComponent,
     AreaEditComponent,
     ForecastComponent,
-    UnixTimeDatePipe
+    UnixTimeDatePipe,
+    ChartComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -53,13 +61,20 @@ registerLocaleData(localeJa, 'ja');
     MatCardModule,
     MatInputModule,
     MatDividerModule,
+    MatSnackBarModule,
     HttpClientModule,
     ChartsModule
   ],
   providers: [
+    { provide: ErrorHandler, useClass: ForecastErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true
     }
   ],

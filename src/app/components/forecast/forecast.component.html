@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <img mat-card-avatar src="//openweathermap.org/img/w/{{weather.weather[0].icon}}.png" [alt]="weather.weather[0].description" />
-      <mat-card-title>{{weather.dt | unixTimeDate : 'yyyy/MM/dd'}}</mat-card-title>
+      <mat-card-title>{{weather.dt | unixTimeDate : 'yyyy/MM/dd'}} {{cityName}}</mat-card-title>
       <mat-card-subtitle>{{weather.weather[0].description}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -32,12 +32,7 @@
   </mat-card>
 </div>
 <div *ngIf="(forecastObservable | async) as forecast">
-  <canvas baseChart width="400" height="100" [datasets]="lineChartTempData" [labels]="lineChartLabels" [options]="{responsive:true}"
-    [legend]="true" chartType="bar"></canvas>
-  <canvas baseChart width="400" height="100" [datasets]="lineChartPressureData" [labels]="lineChartLabels" [options]="{responsive:true}"
-    [legend]="true" chartType="line"></canvas>
-  <canvas baseChart width="400" height="100" [datasets]="lineChartHumidityData" [labels]="lineChartLabels" [options]="{responsive:true}"
-    [legend]="true" chartType="line"></canvas>
+  <div class="button-area"><a mat-raised-button routerLink="/chart/{{cityName}}" color="primary">Chart</a></div>
   <mat-list [@slideFade]="forecast.list">
     <mat-list-item *ngFor="let weather of forecast.list" class="mat-elevation-z1">
       <img matListAvatar src="//openweathermap.org/img/w/{{weather.weather[0].icon}}.png" alt="">

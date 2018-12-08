@@ -1,0 +1,8 @@
+<div *ngIf="(forecastObservable | async) as forecast">
+  <canvas baseChart width="400" height="100" [datasets]="lineChartTempData" [labels]="lineChartLabels" [options]="{responsive:true}"
+    [legend]="true" chartType="bar"></canvas>
+  <canvas baseChart width="400" height="100" [datasets]="lineChartPressureData" [labels]="lineChartLabels" [options]="{responsive:true}"
+    [legend]="true" chartType="line"></canvas>
+  <canvas baseChart width="400" height="100" [datasets]="lineChartHumidityData" [labels]="lineChartLabels" [options]="{responsive:true}"
+    [legend]="true" chartType="line"></canvas>
+</div>

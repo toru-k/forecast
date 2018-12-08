@@ -32,13 +32,13 @@ export class OpenWeatherMapService {
     });
   }
 
-  forecast(city: string): Observable<OpenWeatherMap.Forecast> {
+  forecast(city: string, count: number): Observable<OpenWeatherMap.Forecast> {
     let params: HttpParams = new HttpParams();
     const data = {
       appid: this.APP_ID,
       units: 'metric',
       lang: 'jp',
-      cnt: 24,
+      cnt: count,
       q: city
     };
     Object.keys(data).forEach(function(key) {
